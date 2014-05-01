@@ -1,0 +1,47 @@
+package org.drools.examples.twittercbr
+
+
+import com.finders.twitter.glob.TwitterService
+import twitter4j.GeoLocation
+import twitter4j.Status
+import twitter4j.Place
+import java.text.MessageFormat
+
+global TwitterService twitter;
+
+declare Status
+    @role( event )
+    @timestamp( createdAt )
+    @expires( 10m )
+end
+
+declare StatusLocation
+	@role( event )
+    @expires( 10m )
+    status: Status
+    location: GeoLocation
+end
+
+rule "populate geolocations"
+when
+    $s: Status($user: user, $coordinates: place.geometryCoordinates) from entry-point "twitter"
+    $gc: GeoLocation() from $coordinates
+then
+	insert(new StatusLocation($s, $gc));
+end
+
+rule "Report crime same region over 10"
+when
+    $s: Status($user: user, $coordinates: place.geometryCoordinates) from entry-point "twitter"
+    $gc: GeoLocation() from $coordinates
+    Number(intValue >= 10) from accumulate(
+        $s2: StatusLocation(status.text contains "robbing", 
+        	location.latitude > $gc.latitude - 10, location.latitude < $gc.latitude + 10,
+        	location.longitude > $gc.longitude - 10, location.longitude < $gc.longitude + 10
+          ), count($s2)
+        )
+then
+    // report $gc to $user
+    twitter.tweetToUser($s, "Lookout @" + $user.getScreenName() + " ! Crime in your area right now");
+end
+

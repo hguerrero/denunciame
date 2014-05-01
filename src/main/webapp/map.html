@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1.1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['Country', 'Popularity'],
+          ['Germany', 200],
+          ['United States', 300],
+          ['Brazil', 400],
+          ['Canada', 500],
+          ['France', 600],
+          ['RU', 700]
+        ]);
+
+        var options = {
+        		region: 'US-CA',
+        		resolution: 'provinces',
+                displayMode: 'markers',
+                dataMode: 'markers',
+                colorAxis: {colors: ['green', 'blue']}
+		};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+		  	<form>
+		  		<fieldset>
+  	<table>
+  	<tr>
+  		<td>
+		  			<label>Where: </label>
+  		</td>
+  		<td>
+			  		<input type="text">
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+		  			<label>What: </label>
+  		</td>
+  		<td>
+			  		<select>
+					  <option value="pickpocket">Pickpocket</option>
+					  <option value="murder">Murder</option>
+					  <option value="robbery">Robbery</option>
+					  <option value="bribe">Police Bribe</option>
+					</select>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+		  			<label>When: </label>
+  		</td>
+  		<td>
+  					<input type="date">
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+			  		<input type="submit" value="Report Me!!!">
+  		</td>
+  	</tr>
+  	</table>
+		  		</fieldset>
+		  	</form>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
