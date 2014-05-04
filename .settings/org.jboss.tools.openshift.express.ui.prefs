@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+org.jboss.tools.openshift.ApplicationId=534f3a7a5973caa4f2000321
+org.jboss.tools.openshift.ApplicationName=jbossas
+org.jboss.tools.openshift.Connection=https\://hguerrero%40hotmail.com@
+org.jboss.tools.openshift.DeployFolder=deployments
+org.jboss.tools.openshift.Domain=finders
+org.jboss.tools.openshift.RemoteName=origin

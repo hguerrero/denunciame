@@ -190,6 +190,17 @@
       <version>3.1</version>
       <scope>test</scope>
     </dependency>
+
+        <dependency>
+        	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-search</artifactId>
+        </dependency>
+
+        <dependency>
+        	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-search-infinispan</artifactId>
+        </dependency>
+
   </dependencies>
   <profiles>
     <profile>
