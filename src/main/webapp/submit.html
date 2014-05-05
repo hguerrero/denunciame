@@ -8,6 +8,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
     <!-- bower:js -->
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
     <!-- endbower -->
 </head>
 
@@ -37,14 +38,14 @@
 		<!-- WHERE -->
 		<div id="where-group" class="form-group">
 			<label>¿Donde?</label>
-			<input type="text" name="where" class="form-control" placeholder="Escribe la ciudad o direccion: guadalajara, pachuca, col. morelos" data-ng-model="formData.location.location">
+			<input type="text" name="where-location" class="form-control" placeholder="Escribe la ciudad o direccion: guadalajara, pachuca, col. morelos" data-ng-model="formData.location.location">
 			<span class="help-block"></span>
 		</div>
 
 		<!-- DATE -->
 		<div id="date-group" class="form-group">
 			<label>¿Cuando sucedio?</label>
-			<input type="date" name="date" class="form-control" placeholder="Ingresa la fecha" data-ng-model="formData.dateIncident"/>
+			<input type="date" name="date" class="form-control" placeholder="Ingresa la fecha" data-ng-model="formData.dateIncident" value="{{formData.dateIncident | date :'yyyy-MM-dd' }}"/>
 			<span class="help-block"></span>
 		</div>
 
@@ -68,20 +69,33 @@
 	
 	<script>
 		// define angular module/app
-	    var app = angular.module("myapp", ['ui.bootstrap']);
+	    var app = angular.module("myapp", ['ui.bootstrap','geolocation']);
 	    
 	 	// create angular controller and pass in $scope and $http
-	    app.controller("MyController", function($scope, $http, $q) {
-		    
+	    app.controller("MyController", function($scope, $http, geolocation) {
+
+	    	// get location
+	    	geolocation.getLocation().then(function(data) {
+		    	var loc = $scope.formData.location;
+				loc.lat = data.coords.latitude;
+				loc.lng = data.coords.longitude;
+				return $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + loc.lat + "&lon=" + loc.lng)
+				.then(function(res){
+					loc.location = res.data.display_name;
+					return {lat:res.data.lat, lng:res.data.lon, location:res.data.display_name};
+				});
+	    	});
+    	    
 	    	// create a blank object to hold our form information
 			// $scope will allow this to pass between controller and view
 			$scope.formData = {
-					type:{},
-					location:{
-						lat:19.399760, 
-						lng:-99.141263
-						}
-					};
+				type:{},
+				location:{
+					lat:19.399760, 
+					lng:-99.141263
+					},
+				dateIncident:new Date()
+			};
 
 			// process the form
 			$scope.processForm = function() {
@@ -96,13 +110,6 @@
 			$scope.LoadTypes = function(text) {
 				return $http.get('application/services/type/' + text)
 				.then(function(res){
-					/*
-					var types = [];
-				      angular.forEach(res.data, function(item){
-				        types.push(item.description);
-				      });
-				      return types;
-				      */
 				      $scope.types = res.data;
 				      return res.data;
 				});
