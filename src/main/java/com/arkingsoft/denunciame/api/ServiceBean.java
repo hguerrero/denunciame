@@ -67,7 +67,9 @@ public class ServiceBean implements Service
 	@Override
 	public List<Type> listTypes() 
 	{
-		TypedQuery<Type> q = manager.createQuery("select t from com.arkingsoft.denunciame.model.Type t where t.status = :status", Type.class);
+		TypedQuery<Type> q = manager.createQuery(
+				"select t from com.arkingsoft.denunciame.model.Type t where t.status = :status order by t.description asc", 
+				Type.class);
 		
 		q.setParameter("status", 1);
 		
@@ -92,11 +94,11 @@ public class ServiceBean implements Service
 	public List<Type> listTypes(String text) 
 	{
 		TypedQuery<Type> q = manager.createQuery(
-				"select t from com.arkingsoft.denunciame.model.Type t where t.status = :status and t.description like :text", 
+				"select t from com.arkingsoft.denunciame.model.Type t where t.status = :status and upper(t.description) like :text  order by t.description asc", 
 				Type.class);
 		
 		q.setParameter("status", 1);
-		q.setParameter("text", "%" + text + "%");
+		q.setParameter("text", "%" + text.toUpperCase() + "%");
 		
 		List<Type> types = q.getResultList();
 		

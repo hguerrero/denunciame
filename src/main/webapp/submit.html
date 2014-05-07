@@ -30,15 +30,17 @@
 		<!-- WHAT -->
 		<div id="what-group" class="form-group">
 			<label>¿Que paso?</label>
-			<pre>Model: {{formData.type | json}}</pre>
-			<input type="text" name="what" class="form-control" placeholder="Indica el tipo de incidente: asalto, robo, homicidio" data-ng-model="formData.type" data-typeahead="type as type.description for type in LoadTypes($viewValue)" data-typeahead-loading="loadingLocations" data-typeahead-input-formatter="formatInput($model)">
-			<i data-ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+			<input type="text" name="what" class="form-control" placeholder="Indica el tipo de incidente: asalto, robo, homicidio" data-ng-model="formData.type" data-typeahead="type as type.description for type in LoadTypes($viewValue) | limitTo:5" data-typeahead-loading="loadingPosition" data-typeahead-input-formatter="formatInput($model)" data-typeahead-min-length="3">
+			<i data-ng-show="loadingPosition" class="glyphicon glyphicon-refresh"></i>
+			<span class="help-block"></span>
 		</div>
 
 		<!-- WHERE -->
 		<div id="where-group" class="form-group">
 			<label>¿Donde?</label>
-			<input type="text" name="where-location" class="form-control" placeholder="Escribe la ciudad o direccion: guadalajara, pachuca, col. morelos" data-ng-model="formData.location.location">
+			<pre>Model: {{formData.location | json}}</pre>
+			<input type="text" name="where" class="form-control" placeholder="Escribe la ciudad o direccion: guadalajara, pachuca, col. morelos" data-ng-model="formData.location" data-typeahead="location as location.location for location in LoadLocations($viewValue) | limitTo:5" data-typeahead-loading="loadingLocations" data-typeahead-input-formatter="formatLocationInput($model)" data-typeahead-min-length="3">
+			<i data-ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 			<span class="help-block"></span>
 		</div>
 
@@ -72,17 +74,18 @@
 	    var app = angular.module("myapp", ['ui.bootstrap','geolocation']);
 	    
 	 	// create angular controller and pass in $scope and $http
-	    app.controller("MyController", function($scope, $http, geolocation) {
+	    app.controller("MyController", function($scope, $http, geolocation, limitToFilter) {
 
 	    	// get location
 	    	geolocation.getLocation().then(function(data) {
-		    	var loc = $scope.formData.location;
-				loc.lat = data.coords.latitude;
-				loc.lng = data.coords.longitude;
-				return $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + loc.lat + "&lon=" + loc.lng)
+				return $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + data.coords.latitude + "&lon=" + data.coords.longitude)
 				.then(function(res){
-					loc.location = res.data.display_name;
-					return {lat:res.data.lat, lng:res.data.lon, location:res.data.display_name};
+					var locs = [];
+					var loc = {location: res.data.display_name, place_id: res.data.place_id, lat: res.data.lat, lng: res.data.lon};
+					$scope.formData.location = loc;
+					locs.push(loc);
+					$scope.locations = locs;
+					return loc;
 				});
 	    	});
     	    
@@ -105,13 +108,37 @@
 				});
 			};
 
+			$scope.locations = [];
+
+			$scope.LoadLocations = function(text) {
+				return $http.get('http://nominatim.openstreetmap.org/search?q=' + text + "&format=json")
+				.then(function(res){
+					var locs = [];
+					angular.forEach(res.data, function(value){
+						locs.push({location:value.display_name, lat:value.lat, lng:value.lon, place_id:value.place_id});
+						});
+					$scope.locations = locs;
+					return locs;
+				});
+			};
+			
+			$scope.formatLocationInput = function($model) {
+			    var inputLabel = '';
+			    angular.forEach($scope.locations, function(location) {
+			      if ($model.place_id === location.place_id) {
+			        inputLabel = location.location;
+			      }
+			    });
+			    return inputLabel;
+			  }
+			
 			$scope.types = [];
 
 			$scope.LoadTypes = function(text) {
 				return $http.get('application/services/type/' + text)
 				.then(function(res){
-				      $scope.types = res.data;
-				      return res.data;
+				      $scope.types = limitToFilter(res.data, 15);
+				      return $scope.types;
 				});
 			};
 
