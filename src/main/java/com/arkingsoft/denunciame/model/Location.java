@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Embeddable
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location implements Serializable 
 {
 	private static final long serialVersionUID = 1L;
