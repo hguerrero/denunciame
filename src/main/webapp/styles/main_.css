@@ -1,0 +1,302 @@
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+body {
+    background: url("../img/main-back.png") repeat scroll 0 0 #FAFAFA;
+    color: #444444;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 13px;
+    line-height: 25px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+    background: none repeat scroll 0 0 #16CBE6;
+    border-bottom: 1px solid #0FA6BC;
+    border-top: 4px solid #0FA6BC;
+    height: 70px;
+}
+
+.header .logo h1 {
+    font-size: 40px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.header .logo h1 a {
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed',sans-serif;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+.header .navbar {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 none !important;
+}
+
+.header .navbar * {
+    box-shadow: none !important;
+}
+
+.header .navbar-collapse {
+    border: 0 none !important;
+}
+
+.header .navbar .nav > li > a {
+    border-bottom: 0 none !important;
+    color: #FFFFFF !important;
+    font-size: 13px !important;
+    font-weight: bold;
+    margin-top: 7px !important;
+}
+
+.header .navbar-nav .caret {
+    border-bottom-color: #FFFFFF !important;
+    border-top-color: #FFFFFF !important;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+.container {
+  max-width: 1200px;
+}
+
+.blocky {
+    margin: 30px 0;
+}
+
+.sidey {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE;
+    border-left: 1px solid #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    display: block;
+    float: left;
+    margin-bottom: 30px;
+    padding: 10px;
+    position: absolute;
+    width: 320px;
+}
+
+.sidey ul.nav, .sidey ul.nav ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidey .nav > li {
+    border-bottom: 1px dashed #EEEEEE;
+    margin: 0;
+}
+
+.sidey .nav li a:hover, .sidey .nav li.current > a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 0 none;
+    color: #555555;
+}
+
+.sidey .nav > li > a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-top: 0 none;
+    color: #999999;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.sidey .nav > li > a > i {
+    margin-right: 5px;
+}
+
+.mainy {
+    margin-left: 340px;
+    margin-right: 0;
+    min-height: 900px;
+    position: relative;
+    width: auto;
+}
+
+.page-title {
+    margin: 0 0 10px;
+}
+
+.page-title h2 {
+    font-size: 35px;
+    margin: 0;
+    padding: 0;
+}
+
+.page-title i {
+    font-size: 30px;
+    margin-right: 5px;
+}
+
+.page-title small {
+    font-size: 21px;
+    margin-left: 5px;
+}
+
+.awidget {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE;
+    border-left: 1px solid #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px 3px 3px 1px;
+    margin: 10px auto;
+    max-width: 500px;
+    padding: 5px;
+}
+
+.awidget.full-width {
+    max-width: 100%;
+}
+
+.awidget .awidget-head {
+    padding: 10px;
+}
+
+.awidget .awidget-head h3 {
+    border-bottom: 1px dashed #EEEEEE;
+    color: #666666;
+    font-family: "Open Sans",sans-serif;
+    font-size: 15px;
+    line-height: 25px;
+    margin: 0 0 10px;
+    padding-bottom: 10px;
+}
+
+.awidget .awidget-body {
+    color: #777777;
+    padding: 5px 12px;
+}
+
+#map {
+	height: 300px;
+}
+
+.admin-hero {
+    color: #FFFFFF;
+    margin: 10px 0;
+}
+
+.admin-hero ul li {
+    background: none repeat scroll 0 0 #16CBE6;
+    border: 1px solid #0FA6BC;
+    border-radius: 5px 5px 5px 5px;
+    height: 180px;
+    margin: 5px 3px;
+    padding: 30px;
+    text-align: center;
+}
+
+.admin-hero hr {
+    border-top: 1px solid #40D1E7;
+    margin: 12px 0;
+}
+
+.admin-hero ul li h2 {
+    font-size: 40px;
+    line-height: 40px;
+    margin: 0;
+}
+
+.admin-hero ul li .label {
+    font-size: 15px;
+    position: relative;
+    top: -10px;
+}
+
+a {
+    color: #16CBE6;
+    text-decoration: none;
+}
+
+ul, ol {
+    padding-left: 15px;
+}
+
+hr {
+}
+
+.color {
+    color: #16CBE6;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Open Sans Condensed',sans-serif;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}

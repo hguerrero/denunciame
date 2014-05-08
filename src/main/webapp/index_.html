@@ -1,0 +1,222 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>Denunciame</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	<!--[if lte IE 8]>
+	    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+	<![endif]-->    
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:light&v1' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles/main_.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="header">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-3">
+	    			<div class="logo">
+						<h1>
+							<a href="index.html">Denunciame</a>
+						</h1>
+					</div>
+	    			</div>
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<div class="navbar navbar-inverse" role="banner">
+						<div class="navbar-header"></div>
+						<nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+									Mi Cuenta
+									<b class="caret"></b>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="page-content blocky">
+    	<div class="container">
+    		<div class="sidey awidget full-width">
+   						<div class="awidget-head">
+						<h3><span class="glyphicon glyphicon-pencil"></span> Levanta una denuncia!</h3>
+						</div>
+    					<div class="awidget-body">
+    						<!-- FORM -->
+							<form class="form-horizontal" data-role="form">
+								<!-- WHAT -->
+								<div id="what-group" class="form-group">
+									<div class="col-lg-12">
+										<label>¿Que paso?</label>
+										<input type="text" name="what" class="form-control" placeholder="Indica el tipo de denuncia: asalto, robo, homicidio" data-ng-model="formData.type" data-typeahead="type as type.description for type in LoadTypes($viewValue) | limitTo:5" data-typeahead-loading="loadingPosition" data-typeahead-input-formatter="formatInput($model)" data-typeahead-min-length="3">
+										<i data-ng-show="loadingPosition" class="glyphicon glyphicon-refresh"></i>
+										<span class="help-block"></span>
+									</div>
+								</div>
+								<!-- WHERE -->
+								<div id="where-group" class="form-group">
+									<div class="col-lg-12">
+										<label>¿Donde?</label>
+										<input type="text" name="where" class="form-control" placeholder="Escribe la ciudad o direccion: guadalajara, pachuca, col. morelos" data-ng-model="formData.location" data-typeahead="location as location.location for location in LoadLocations($viewValue) | limitTo:5" data-typeahead-loading="loadingLocations" data-typeahead-input-formatter="formatLocationInput($model)" data-typeahead-min-length="3">
+										<i data-ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+										<span class="help-block"></span>
+									</div>
+								</div>
+								<!-- DATE -->
+								<div id="date-group" class="form-group">
+									<div class="col-lg-12">
+										<label>¿Cuando sucedio?</label>
+										<input type="date" name="date" class="form-control" placeholder="Ingresa la fecha" data-ng-model="formData.dateIncident" value="{{formData.dateIncident | date :'yyyy-MM-dd' }}"/>
+										<span class="help-block"></span>
+									</div>
+								</div>
+						
+								<!-- INCIDENT DESCRIPTION -->
+								<div id="description-group" class="form-group">
+									<div class="col-lg-12">
+										<label>¿Como paso?</label>
+										<textarea rows="4" name="description" class="form-control" placeholder="Describe con tus palabras el incidente: saliendo del banco, viajando en el transporte publico" data-ng-model="formData.description"></textarea>
+										<span class="help-block"></span>
+									</div>
+								</div>
+								
+								<!-- MEDIA -->
+								<div id="media-group" class="form-group">
+									<div class="col-lg-12">
+										<label>¿Fotos y/o Videos?</label>
+										<input data-ng-model='file' type="file"/>
+										<span class="help-block"></span>
+									</div>
+								</div>
+						
+								<hr>
+								
+								<!-- SUBMIT BUTTON -->
+								
+								<button type="submit" class="btn btn-success btn-lg btn-block">
+									<span class="glyphicon glyphicon-flash"></span> Denunciame!
+								</button>
+							</form>
+						</div>
+    		</div>
+    		<div class="mainy" style="">
+    			<div class="page-title">
+    				<h2>
+						<i class="fa fa-desktop color"></i>
+						Denuncias
+						<small>Denuncias reportadas en las ultimas horas:</small>
+					</h2>
+					<hr>
+    			</div>
+    			<div class="row">
+    				<div class="col-md-12">
+    					<div class="awidget full-width">
+    						<div class="awidget-head">
+							<h3><span class="glyphicon glyphicon-globe"></span> Denuncias en tu zona</h3>
+							</div>
+	    					<div class="awidget-body">
+								<div class="chart-container">
+									<div id="map"></div>
+								</div>
+							</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="row">
+    				<div class="col-md-6">
+    				</div>
+    			</div>
+    			<div class="admin-hero">
+    				<ul class="list-inline">
+    					<li>
+							<span class="peity-bar" style="display: none;">10,12,14,16,26,23,20,18,16,13,-10,-13,-20,-18,10,12,14,11,10,12,14,22,26,23,20,18</span>
+							<canvas class="peity" style="height: 50px; width: 100px;" height="50" width="100"></canvas>
+							<hr>
+							<h2>
+								610%
+								<span class="label label-danger">
+									<i class="fa fa-angle-double-up"></i>
+								</span>
+							</h2>
+						</li>
+					</ul>
+    			</div>
+    			<div class="row">
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+  	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js 
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <!-- endbuild -->
+  <script src="//cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+  <script>
+  	var map = L.map('map', {
+  	    center: [51.505, -0.09],
+  	    zoom: 15
+  	});
+    var markerLayerGroup = L.layerGroup().addTo(map);
+    L.tileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-szwdot65/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 5,
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+    }).addTo(map);
+  </script>
+</body>
+</html>
